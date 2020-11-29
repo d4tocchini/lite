@@ -111,6 +111,10 @@ end
 
 
 function TreeView:on_mouse_pressed(button, x, y)
+  -- if math.abs(config.treeview_size - x) < 20 then
+  --   config.treeview_size = x
+  --   return
+  -- end
   if not self.hovered_item then
     return
   elseif self.hovered_item.type == "dir" then

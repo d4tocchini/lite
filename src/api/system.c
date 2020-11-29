@@ -5,8 +5,10 @@
 #include <unistd.h>
 #include <errno.h>
 #include <sys/stat.h>
-#include "api.h"
-#include "rencache.h"
+
+#include "./api.h"
+// #include "rencache.h"
+
 #ifdef _WIN32
   #include <windows.h>
 #endif
@@ -57,7 +59,9 @@ top:
         lua_pushnumber(L, e.window.data2);
         return 3;
       } else if (e.window.event == SDL_WINDOWEVENT_EXPOSED) {
-        rencache_invalidate();
+
+        ren_invalidate();
+
         lua_pushstring(L, "exposed");
         return 1;
       }
@@ -179,14 +183,14 @@ static int f_set_window_title(lua_State *L) {
 
 
 static const char *window_opts[] = { "normal", "maximized", "fullscreen", 0 };
-enum { WIN_NORMAL, WIN_MAXIMIZED, WIN_FULLSCREEN };
+enum { _WINDOW_NORMAL, _WINDOW_MAXIMIZED, _WINDOW_FULLSCREEN };
 
 static int f_set_window_mode(lua_State *L) {
   int n = luaL_checkoption(L, 1, "normal", window_opts);
   SDL_SetWindowFullscreen(window,
-    n == WIN_FULLSCREEN ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
-  if (n == WIN_NORMAL) { SDL_RestoreWindow(window); }
-  if (n == WIN_MAXIMIZED) { SDL_MaximizeWindow(window); }
+    n == _WINDOW_FULLSCREEN ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
+  if (n == _WINDOW_NORMAL) { SDL_RestoreWindow(window); }
+  if (n == _WINDOW_MAXIMIZED) { SDL_MaximizeWindow(window); }
   return 0;
 }
 
@@ -379,7 +383,7 @@ static int f_fuzzy_match(lua_State *L) {
 }
 
 
-static const luaL_Reg lib[] = {
+static const luaL_Reg system_lib[] = {
   { "poll_event",          f_poll_event          },
   { "wait_event",          f_wait_event          },
   { "set_cursor",          f_set_cursor          },
@@ -402,6 +406,6 @@ static const luaL_Reg lib[] = {
 
 
 int luaopen_system(lua_State *L) {
-  luaL_newlib(L, lib);
+  luaL_newlib(L, system_lib);
   return 1;
 }

@@ -7,10 +7,12 @@ style.scrollbar_size = common.round(4 * SCALE)
 style.caret_width = common.round(2 * SCALE)
 style.tab_width = common.round(170 * SCALE)
 
-style.font = renderer.font.load(EXEDIR .. "/data/fonts/font.ttf", 14 * SCALE)
+-- style.font = renderer.font.load(EXEDIR .. "/data/fonts/font.ttf", 14 * SCALE)
+style.font = renderer.font.load(EXEDIR .. "/data/fonts/InterDisplay-SemiBold.otf", 14 * SCALE)
 style.big_font = renderer.font.load(EXEDIR .. "/data/fonts/font.ttf", 34 * SCALE)
 style.icon_font = renderer.font.load(EXEDIR .. "/data/fonts/icons.ttf", 14 * SCALE)
-style.code_font = renderer.font.load(EXEDIR .. "/data/fonts/monospace.ttf", 13.5 * SCALE)
+-- style.code_font = renderer.font.load(EXEDIR .. "/data/fonts/monospace.ttf", 13.5 * SCALE)
+style.code_font = renderer.font.load(EXEDIR .. "/data/fonts/SF-Mono-Semibold.otf", 13.5 * SCALE)
 
 style.background = { common.color "#2e2e32" }  -- doc view
 style.background2 = { common.color "#252529" } -- left view
@@ -38,5 +40,67 @@ style.syntax["literal"] = { common.color "#FFA94D" }
 style.syntax["string"] = { common.color "#f7c95c" }
 style.syntax["operator"] = { common.color "#93DDFA" }
 style.syntax["function"] = { common.color "#93DDFA" }
+
+-- style.cel = {}
+-- style.cel["view"] = [[
+--     bool hits_rect(vec2f pt, vec4f rect) // scrollbar_overlaps_point
+--     {
+
+--     }
+
+--     bool on_mousedown()
+--     {
+--         if (hits_rect(MOUSE, SCROLLBAR_RECT))
+--             $$(scrollbar_drag, true);
+--     }
+
+--     bool on_mouse_up()
+--     {
+--         $$(scrollbar_drag, false);
+--     }
+
+--     f32 GET_scroll_size()
+--     {
+--         return SCROLL_SIZE_DEFAULT;
+--     }
+--     void clamp_scroll()
+--     {
+--         f32 max = $(scroll_size) - $(size_y);
+--         $$(scroll_to_y, clamp($(scroll_to_y), 0, max)));
+--     }
+--     void update()
+--     {
+--         clamp_scroll();
+--         $$anim(scroll_x, $(scroll_to_x), .3);
+--         $$anim(scroll_y, $(scroll_to_y), .3);
+--     }
+--     void draw_bg()
+--     {
+--         draw_rect($(rect), $(color))
+--     }
+--     void draw() {}
+--     void draw_scrollbar()
+--     {
+--         if (SCROLLBAR_HOVER || SCROLLBAR_DRAG)
+--             draw_rect(SCROLLBAR_RECT,
+--         else
+--     }
+-- ]]
+-- style.cel["img-input"] = [[
+
+--     USE_MOUSE
+--     void update()
+--     {
+
+--     }
+--     void render(int id, int x, int y, int w, int h)
+--     {
+--         path();
+--         fill_rgba(0,192,0,70);
+--         rect(10,10,w-20,h-20);
+--         fill();
+--     }
+
+-- ]]
 
 return style

@@ -344,6 +344,9 @@ function Node:draw_tabs()
       renderer.draw_rect(x, y, w, h, style.background)
       renderer.draw_rect(x + w, y, ds, h, style.divider)
       renderer.draw_rect(x - ds, y, ds, h, style.divider)
+
+      -- renderer.draw_rect(x, y + ds, style.padding.x, h - ds - ds, { common.color "#ff0000" } )
+      common.draw_text(style.font, style.text, "x", "center", x, y + ds, style.padding.x, h - ds - ds)
     end
     if i == self.hovered_tab then
       color = style.text
@@ -351,7 +354,9 @@ function Node:draw_tabs()
     core.push_clip_rect(x, y, w, h)
     x, w = x + style.padding.x, w - style.padding.x * 2
     local align = style.font:get_width(text) > w and "left" or "center"
+
     common.draw_text(style.font, color, text, align, x, y, w, h)
+
     core.pop_clip_rect()
   end
 

@@ -1,16 +1,25 @@
 local common = {}
 
+-- String helpers http://lua-users.org/wiki/StringRecipes
+
+function common.str_starts_with(str, start)
+  return str:sub(1, #start) == start
+end
+
+function common.str_ends_with(str, ending)
+  return ending == "" or str:sub(-#ending) == ending
+end
 
 function common.is_utf8_cont(char)
   local byte = char:byte()
   return byte >= 0x80 and byte < 0xc0
 end
 
-
 function common.utf8_chars(text)
   return text:gmatch("[\0-\x7f\xc2-\xf4][\x80-\xbf]*")
 end
 
+--
 
 function common.clamp(n, lo, hi)
   return math.max(math.min(n, hi), lo)

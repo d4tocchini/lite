@@ -9,6 +9,7 @@ local StatusView
 local CommandView
 local Doc
 
+
 local core = {}
 
 
@@ -176,6 +177,9 @@ function core.load_plugins()
   local no_errors = true
   local files = system.list_dir(EXEDIR .. "/data/plugins")
   for _, filename in ipairs(files) do
+    if not common.str_ends_with(filename, ".lua") then
+      goto continue
+    end
     local modname = "plugins." .. filename:gsub(".lua$", "")
     local ok = core.try(require, modname)
     if ok then
@@ -183,6 +187,7 @@ function core.load_plugins()
     else
       no_errors = false
     end
+    ::continue::
   end
   return no_errors
 end
