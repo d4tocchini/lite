@@ -165,14 +165,14 @@ function ResultsView:draw()
   local per = self.last_file_idx / #core.project_files
   local text
   if self.searching then
-    text = string.format("Searching %d%% (%d of %d files, %d matches) for %q...",
+    text = string.format("Searching %f%% (%d of %d files, %d matches) for %q...",
       per * 100, self.last_file_idx, #core.project_files,
       #self.results, self.query)
   else
     text = string.format("Found %d matches for %q",
       #self.results, self.query)
   end
-  local color = common.lerp(style.text, style.accent, self.brightness / 100)
+  local color = common.lerp_int(style.text, style.accent, self.brightness / 100)
   renderer.draw_text(style.font, text, x, y, color)
 
   -- horizontal line
@@ -180,7 +180,7 @@ function ResultsView:draw()
   local x = ox + style.padding.x
   local w = self.size.x - style.padding.x * 2
   local h = style.divider_size
-  local color = common.lerp(style.dim, style.text, self.brightness / 100)
+  local color = common.lerp_int(style.dim, style.text, self.brightness / 100)
   renderer.draw_rect(x, oy + yoffset - style.padding.y, w, h, color)
   if self.searching then
     renderer.draw_rect(x, oy + yoffset - style.padding.y, w * per, h, style.text)

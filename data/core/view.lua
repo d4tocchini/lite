@@ -53,10 +53,10 @@ function View:get_scrollbar_rect()
   if sz <= self.size.y or sz == math.huge then
     return 0, 0, 0, 0
   end
-  local h = math.max(20, self.size.y * self.size.y / sz)
+  local h = math.max(20, self.size.y * self.size.y // sz)
   return
     self.position.x + self.size.x - style.scrollbar_size,
-    self.position.y + self.scroll.y * (self.size.y - h) / (sz - self.size.y),
+    self.position.y + self.scroll.y * (self.size.y - h) // (sz - self.size.y),
     style.scrollbar_size,
     h
 end

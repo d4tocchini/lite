@@ -42,6 +42,17 @@ function common.lerp(a, b, t)
   return res
 end
 
+function common.lerp_int(a, b, t)
+  if type(a) ~= "table" then
+    return common.round(a + (b - a) * t)
+  end
+  local res = {}
+  for k, v in pairs(b) do
+    res[k] = common.lerp_int(a[k], v, t)
+  end
+  return res
+end
+
 
 function common.color(str)
   local r, g, b, a = str:match("#(%x%x)(%x%x)(%x%x)")

@@ -9,9 +9,14 @@ local StatusView
 local CommandView
 local Doc
 
-
 local core = {}
 
+
+global({
+  update = function ()
+    xpcall(core.run, core.on_error)
+  end
+})
 
 local function project_scan_thread()
   local function diff_files(a, b)
@@ -126,8 +131,10 @@ function core.init()
   end
 end
 
-
-local temp_uid = (system.get_time() * 1000) % 0xffffffff
+-- function truncate(x)
+--   return x<0 and math.ceil(x) or math.floor(x)
+-- end
+local temp_uid = math.floor((system.get_time() * 1000) % 0xffffffff)
 local temp_file_prefix = string.format(".lite_temp_%08x", temp_uid)
 local temp_file_counter = 0
 
@@ -454,7 +461,7 @@ end)
 
 
 function core.run()
-  while true do
+  -- while true do
     core.frame_start = system.get_time()
     local did_redraw = core.step()
     run_threads()
@@ -463,9 +470,8 @@ function core.run()
     end
     local elapsed = system.get_time() - core.frame_start
     system.sleep(math.max(0, 1 / config.fps - elapsed))
-  end
+  -- end
 end
-
 
 function core.on_error(err)
   -- write error to file
@@ -480,6 +486,12 @@ function core.on_error(err)
     end
   end
 end
+
+-- function update_error(err)
+--   pcall(core.on_error, err)
+--   os.exit(1)
+-- end
+
 
 
 return core

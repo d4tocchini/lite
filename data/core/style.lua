@@ -7,12 +7,12 @@ style.scrollbar_size = common.round(4 * SCALE)
 style.caret_width = common.round(2 * SCALE)
 style.tab_width = common.round(170 * SCALE)
 
--- style.font = renderer.font.load(EXEDIR .. "/data/fonts/font.ttf", 14 * SCALE)
-style.font = renderer.font.load(EXEDIR .. "/data/fonts/InterDisplay-SemiBold.otf", 14 * SCALE)
-style.big_font = renderer.font.load(EXEDIR .. "/data/fonts/font.ttf", 34 * SCALE)
-style.icon_font = renderer.font.load(EXEDIR .. "/data/fonts/icons.ttf", 14 * SCALE)
--- style.code_font = renderer.font.load(EXEDIR .. "/data/fonts/monospace.ttf", 13.5 * SCALE)
-style.code_font = renderer.font.load(EXEDIR .. "/data/fonts/SF-Mono-Semibold.otf", 13.5 * SCALE)
+-- style.font = renderer.font.load(EXEDIR .. "/data/font/font.ttf", 14 * SCALE)
+style.font = renderer.font.load(EXEDIR .. "/data/font/InterDisplay-SemiBold.otf", 14 * SCALE)
+style.big_font = renderer.font.load(EXEDIR .. "/data/font/font.ttf", 34 * SCALE)
+style.icon_font = renderer.font.load(EXEDIR .. "/data/font/icons.ttf", 14 * SCALE)
+-- style.code_font = renderer.font.load(EXEDIR .. "/data/font/monospace.ttf", 13.5 * SCALE)
+style.code_font = renderer.font.load(EXEDIR .. "/data/font/SF-Mono-Semibold.otf", 13 * SCALE)
 
 style.background = { common.color "#2e2e32" }  -- doc view
 style.background2 = { common.color "#252529" } -- left view

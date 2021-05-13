@@ -7,6 +7,7 @@
 #include "renderer.h"
 #endif
 
+// TODO: clarify tendency to read floats & write ints
 
 static ren_color_t _lua_checkcolor(lua_State* L, int idx, int def)
 {
@@ -18,10 +19,10 @@ static ren_color_t _lua_checkcolor(lua_State* L, int idx, int def)
     lua_rawgeti(L, idx, 2);
     lua_rawgeti(L, idx, 3);
     lua_rawgeti(L, idx, 4);
-    color.r = luaL_checknumber(L, -4);
-    color.g = luaL_checknumber(L, -3);
-    color.b = luaL_checknumber(L, -2);
-    color.a = luaL_optnumber(L, -1, 255);
+    color.r = luaL_checkinteger(L, -4);
+    color.g = luaL_checkinteger(L, -3);
+    color.b = luaL_checkinteger(L, -2);
+    color.a = luaL_optinteger(L, -1, 255);
     lua_pop(L, 4);
     return color;
 }
@@ -39,8 +40,8 @@ static int f_get_size(lua_State* L)
 {
     int w, h;
     ren_get_size(&w, &h);
-    lua_pushnumber(L, w);
-    lua_pushnumber(L, h);
+    lua_pushinteger(L, w);
+    lua_pushinteger(L, h);
     return 2;
 }
 

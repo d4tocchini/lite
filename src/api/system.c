@@ -55,8 +55,8 @@ top:
     case SDL_WINDOWEVENT:
       if (e.window.event == SDL_WINDOWEVENT_RESIZED) {
         lua_pushstring(L, "resized");
-        lua_pushnumber(L, e.window.data1);
-        lua_pushnumber(L, e.window.data2);
+        lua_pushinteger(L, e.window.data1);
+        lua_pushinteger(L, e.window.data2);
         return 3;
       } else if (e.window.event == SDL_WINDOWEVENT_EXPOSED) {
 
@@ -78,8 +78,8 @@ top:
       SDL_GetWindowPosition(window, &wx, &wy);
       lua_pushstring(L, "filedropped");
       lua_pushstring(L, e.drop.file);
-      lua_pushnumber(L, mx - wx);
-      lua_pushnumber(L, my - wy);
+      lua_pushinteger(L, mx - wx);
+      lua_pushinteger(L, my - wy);
       SDL_free(e.drop.file);
       return 4;
 
@@ -102,30 +102,30 @@ top:
       if (e.button.button == 1) { SDL_CaptureMouse(1); }
       lua_pushstring(L, "mousepressed");
       lua_pushstring(L, button_name(e.button.button));
-      lua_pushnumber(L, e.button.x);
-      lua_pushnumber(L, e.button.y);
-      lua_pushnumber(L, e.button.clicks);
+      lua_pushinteger(L, e.button.x);
+      lua_pushinteger(L, e.button.y);
+      lua_pushinteger(L, e.button.clicks);
       return 5;
 
     case SDL_MOUSEBUTTONUP:
       if (e.button.button == 1) { SDL_CaptureMouse(0); }
       lua_pushstring(L, "mousereleased");
       lua_pushstring(L, button_name(e.button.button));
-      lua_pushnumber(L, e.button.x);
-      lua_pushnumber(L, e.button.y);
+      lua_pushinteger(L, e.button.x);
+      lua_pushinteger(L, e.button.y);
       return 4;
 
     case SDL_MOUSEMOTION:
       lua_pushstring(L, "mousemoved");
-      lua_pushnumber(L, e.motion.x);
-      lua_pushnumber(L, e.motion.y);
-      lua_pushnumber(L, e.motion.xrel);
-      lua_pushnumber(L, e.motion.yrel);
+      lua_pushinteger(L, e.motion.x);
+      lua_pushinteger(L, e.motion.y);
+      lua_pushinteger(L, e.motion.xrel);
+      lua_pushinteger(L, e.motion.yrel);
       return 5;
 
     case SDL_MOUSEWHEEL:
       lua_pushstring(L, "mousewheel");
-      lua_pushnumber(L, e.wheel.y);
+      lua_pushinteger(L, e.wheel.y);
       return 2;
 
     default:
@@ -290,10 +290,11 @@ static int f_get_file_info(lua_State *L) {
   }
 
   lua_newtable(L);
-  lua_pushnumber(L, s.st_mtime);
+  // On POSIX-conformant systems, time_t is an integer type and its values represent the number of seconds elapsed since the epoch, which is 00:00:00 on January 1, 1970, Coordinated Universal Time.
+  lua_pushinteger(L, s.st_mtime);
   lua_setfield(L, -2, "modified");
 
-  lua_pushnumber(L, s.st_size);
+  lua_pushinteger(L, s.st_size);
   lua_setfield(L, -2, "size");
 
   if (S_ISREG(s.st_mode)) {
@@ -378,7 +379,7 @@ static int f_fuzzy_match(lua_State *L) {
   }
   if (*ptn) { return 0; }
 
-  lua_pushnumber(L, score - (int) strlen(str));
+  lua_pushinteger(L, score - (int) strlen(str));
   return 1;
 }
 

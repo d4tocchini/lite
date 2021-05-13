@@ -9,7 +9,7 @@ static int f_load(lua_State *L) {
   float fontsize = luaL_checknumber(L, 2);
   int **self = lua_newuserdata(L, sizeof(*self));
   luaL_setmetatable(L, API_TYPE_FONT);
-  // TODO:
+
   int id = ren_install_font(filename, filename);
   *self = id;
 
@@ -18,7 +18,8 @@ static int f_load(lua_State *L) {
   // memcpy(*self, filename, l+1);
 
   // *self = ren_load_font(filename, fontsize);
-  if (!*self) {
+  // if (!*self) {
+  if (*self < 0) {
       luaL_error(L, "failed to load font");
   }
 
@@ -49,6 +50,11 @@ static int f_get_width(lua_State *L) {
   // RenFont **self = luaL_checkudata(L, 1, API_TYPE_FONT);
   void **self = luaL_checkudata(L, 1, API_TYPE_FONT);
   const char *text = luaL_checkstring(L, 2);
+
+  // TODO: use font & (int or float?)
+  vg_t* vg = ctx.vg;
+  nvgFontFaceId(vg, *self);
+  // printf("font=%i\n",*self);
   lua_pushnumber(L,
       ren_get_text_width(text, -1)
       // ren_get_font_width(*self, text)
@@ -60,8 +66,12 @@ static int f_get_width(lua_State *L) {
 static int f_get_height(lua_State *L) {
   // RenFont **self = luaL_checkudata(L, 1, API_TYPE_FONT);
   void **self = luaL_checkudata(L, 1, API_TYPE_FONT);
+
+  // TODO: use font & (int or float?)
+  vg_t* vg = ctx.vg;
+  nvgFontFaceId(vg, *self);
   lua_pushnumber(L,
-      ren_get_text_height() * 1.1
+      ren_get_text_height() // * 1.1
       // ren_get_font_height(*self)
   );
   return 1;
